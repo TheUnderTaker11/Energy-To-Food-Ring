@@ -11,7 +11,7 @@ import com.theundertaker11.energytofood.util.ModUtils;
 
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
-import net.minecraft.client.util.ITooltipFlag;
+import cofh.api.energy.IEnergyContainerItem;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,8 +30,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-@Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles")
-public class ItemFoodRing extends Item implements IItemModelProvider, IBauble {
+@Optional.Interface(iface = "baubles.api.IBauble", modid = "Baubles")
+public class ItemFoodRing extends Item implements IEnergyContainerItem, IItemModelProvider, IBauble {
 
 	public static final int Capacity = 50000;
 	private static String name;
@@ -115,19 +115,19 @@ public class ItemFoodRing extends Item implements IItemModelProvider, IBauble {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 		IEnergyStorage energy = ModUtils.getEnergy(stack);
 		if (energy != null) {
 			tooltip.add("The energy stored is: " + energy.getEnergyStored() + "/" + energy.getMaxEnergyStored());
 		} else
 			tooltip.add("IT DONT WORKKKK");
 	}
-/*
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
 		NBTTagCompound tag = new NBTTagCompound();
-		tag.setInteger("energy", 0);
+		tag.setInteger("Energy", 0);
 		ItemStack stack = new ItemStack(ModItems.FoodRing, 1, 0, tag);
 		subItems.add(new ItemStack(itemIn));
 	}
@@ -149,5 +149,5 @@ public class ItemFoodRing extends Item implements IItemModelProvider, IBauble {
 	@Override
 	public int getMaxEnergyStored(ItemStack container) {
 		return this.Capacity;
-	}*/
+	}
 }
